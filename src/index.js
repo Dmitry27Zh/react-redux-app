@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom/client'
 
 const taskReducer = (state, action) => {
   switch (action.type) {
-    case 'task/completed':
+    case 'task/updated':
       return state.map((item) => {
         if (item.id === action.payload.id) {
-          return { ...item, completed: true }
+          return { ...item, ...action.payload }
         } else {
           return item
         }
@@ -48,14 +48,23 @@ const App = () => {
   }, [])
   const completeTask = (id) => {
     store.dispatch({
-      type: 'task/completed',
+      type: 'task/updated',
       payload: {
         id,
+        completed: true,
       },
     })
-
-    console.log(store.getState())
   }
+  const changeDescription = (id) => {
+    store.dispatch({
+      type: 'task/updated',
+      payload: {
+        id,
+        description: `New Title for id:${id}`,
+      },
+    })
+  }
+
   return (
     <>
       <h1>App</h1>
@@ -65,6 +74,7 @@ const App = () => {
             <p>{item.description}</p>
             <p>Completed: {String(item.completed)}</p>
             <button onClick={() => completeTask(item.id)}>Complete</button>
+            <button onClick={() => changeDescription(item.id)}>Change title</button>
             <hr />
           </li>
         ))}
