@@ -19,3 +19,12 @@ export const descriptionChanged = (id) => {
     },
   }
 }
+
+export const taskRemoved = (id) => {
+  return {
+    type: actions.taskRemoved,
+    payload: {
+      id,
+    },
+  }
+}
