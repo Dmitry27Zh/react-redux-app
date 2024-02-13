@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 
 const taskReducer = (state, action) => {
@@ -18,6 +18,7 @@ const taskReducer = (state, action) => {
 
 const createStore = (reducer, initialState) => {
   let state = initialState
+  const listeners = []
 
   return {
     getState() {
@@ -25,6 +26,10 @@ const createStore = (reducer, initialState) => {
     },
     dispatch(action) {
       state = reducer(state, action)
+      listeners.forEach((listener) => listener(state))
+    },
+    subscribe(listener) {
+      listeners.push(listener)
     },
   }
 }
@@ -35,7 +40,12 @@ const store = createStore(taskReducer, [
 ])
 
 const App = () => {
-  const state = store.getState()
+  const [state, setState] = useState(store.getState())
+  useEffect(() => {
+    store.subscribe(() => {
+      setState(store.getState())
+    })
+  }, [])
   const completeTask = (id) => {
     store.dispatch({
       type: 'task/completed',
