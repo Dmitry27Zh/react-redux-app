@@ -1,12 +1,26 @@
-import { createAction, createReducer } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = [
   { id: 1, description: 'Task 1', completed: false },
   { id: 2, description: 'Task 2', completed: false },
 ]
 
-const update = createAction('task/update')
-const remove = createAction('task/removed')
+const slice = createSlice({
+  name: 'tasks',
+  initialState,
+  reducers: {
+    update(state, action) {
+      const elementIndex = state.findIndex((item) => item.id === action.payload.id)
+      const element = state[elementIndex]
+      state[elementIndex] = { ...element, ...action.payload }
+    },
+    remove(state, action) {
+      return state.filter((item) => item.id !== action.payload.id)
+    },
+  },
+})
+
+const { update, remove } = slice.actions
 
 export const taskCompleted = (id) => {
   return update({
@@ -28,16 +42,4 @@ export const taskRemoved = (id) => {
   })
 }
 
-const reducer = createReducer(initialState, (builder) => {
-  builder
-    .addCase(update, (state, action) => {
-      const elementIndex = state.findIndex((item) => item.id === action.payload.id)
-      const element = state[elementIndex]
-      state[elementIndex] = { ...element, ...action.payload }
-    })
-    .addCase(remove, (state, action) => {
-      return state.filter((item) => item.id !== action.payload.id)
-    })
-})
-
-export default reducer
+export default slice.reducer
