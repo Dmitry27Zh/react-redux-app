@@ -1,6 +1,6 @@
 import { taskUpdated } from './actionTypes'
 
-export const taskReducer = (state, action) => {
+export const taskReducer = (state = [], action) => {
   switch (action.type) {
     case taskUpdated:
       return state.map((item) => {
