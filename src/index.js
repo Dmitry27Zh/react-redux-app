@@ -1,38 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom/client'
-
-const taskReducer = (state, action) => {
-  switch (action.type) {
-    case 'task/updated':
-      return state.map((item) => {
-        if (item.id === action.payload.id) {
-          return { ...item, ...action.payload }
-        } else {
-          return item
-        }
-      })
-    default:
-      return state
-  }
-}
-
-const createStore = (reducer, initialState) => {
-  let state = initialState
-  const listeners = []
-
-  return {
-    getState() {
-      return state
-    },
-    dispatch(action) {
-      state = reducer(state, action)
-      listeners.forEach((listener) => listener(state))
-    },
-    subscribe(listener) {
-      listeners.push(listener)
-    },
-  }
-}
+import { createStore } from './store/createStore'
+import { taskReducer } from './store/taskReducer'
+import * as actions from './store/actionTypes'
 
 const store = createStore(taskReducer, [
   { id: 1, description: 'Task 1', completed: false },
@@ -48,7 +18,7 @@ const App = () => {
   }, [])
   const completeTask = (id) => {
     store.dispatch({
-      type: 'task/updated',
+      type: actions.taskUpdated,
       payload: {
         id,
         completed: true,
@@ -57,7 +27,7 @@ const App = () => {
   }
   const changeDescription = (id) => {
     store.dispatch({
-      type: 'task/updated',
+      type: actions.taskUpdated,
       payload: {
         id,
         description: `New Title for id:${id}`,
