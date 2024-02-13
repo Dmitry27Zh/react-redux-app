@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom/client'
-import { initializeStore } from './store/store'
-import * as actions from './store/actions'
+import configureStore from './store/store'
+import * as actions from './store/tasks/actions'
 
-const store = initializeStore()
+const store = configureStore()
 
 const App = () => {
   const [state, setState] = useState(store.getState())
@@ -32,7 +32,7 @@ const App = () => {
             <p>Completed: {String(item.completed)}</p>
             <button onClick={() => completeTask(item.id)}>Complete</button>
             <button onClick={() => changeDescription(item.id)}>Change title</button>
-            <button onClick={() => removeTask(item.id)}>Change title</button>
+            <button onClick={() => removeTask(item.id)}>Remove</button>
             <hr />
           </li>
         ))}
