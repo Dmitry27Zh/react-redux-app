@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom/client'
-import * as actions from './store/actionTypes'
 import { initializeStore } from './store/store'
+import * as actions from './store/actions'
 
 const store = initializeStore()
 
@@ -13,22 +13,10 @@ const App = () => {
     })
   }, [])
   const completeTask = (id) => {
-    store.dispatch({
-      type: actions.taskUpdated,
-      payload: {
-        id,
-        completed: true,
-      },
-    })
+    store.dispatch(actions.taskCompleted(id))
   }
   const changeDescription = (id) => {
-    store.dispatch({
-      type: actions.taskUpdated,
-      payload: {
-        id,
-        description: `New Title for id:${id}`,
-      },
-    })
+    store.dispatch(actions.descriptionChanged(id))
   }
 
   return (
