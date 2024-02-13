@@ -1,4 +1,9 @@
-import { createAction } from '@reduxjs/toolkit'
+import { createAction, createReducer } from '@reduxjs/toolkit'
+
+const initialState = [
+  { id: 1, description: 'Task 1', completed: false },
+  { id: 2, description: 'Task 2', completed: false },
+]
 
 const update = createAction('task/update')
 const remove = createAction('task/removed')
@@ -23,21 +28,16 @@ export const taskRemoved = (id) => {
   })
 }
 
-const reducer = (state = [], action) => {
-  switch (action.type) {
-    case update.type:
-      return state.map((item) => {
-        if (item.id === action.payload.id) {
-          return { ...item, ...action.payload }
-        } else {
-          return item
-        }
-      })
-    case remove.type:
+const reducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase(update, (state, action) => {
+      const elementIndex = state.findIndex((item) => item.id === action.payload.id)
+      const element = state[elementIndex]
+      state[elementIndex] = { ...element, ...action.payload }
+    })
+    .addCase(remove, (state, action) => {
       return state.filter((item) => item.id !== action.payload.id)
-    default:
-      return state
-  }
-}
+    })
+})
 
 export default reducer
