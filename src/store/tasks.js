@@ -7,7 +7,7 @@ const slice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
-    set(_, action) {
+    recived(_, action) {
       return action.payload
     },
     update(state, action) {
@@ -21,7 +21,7 @@ const slice = createSlice({
   },
 })
 
-const { set, update, remove } = slice.actions
+const { recived, update, remove } = slice.actions
 
 const taskRequested = createAction('task/requested')
 const taskRequestFailed = createAction('task/requestFailed')
@@ -55,10 +55,10 @@ export const getTasks = () => async (dispatch) => {
   dispatch(taskRequested())
   try {
     const data = await todosService.fetch()
-    dispatch(set(data))
+    dispatch(recived(data))
   } catch (e) {
     console.error(e)
-    dispatch(taskRequestFailed())
+    dispatch(taskRequestFailed(e))
   }
 }
 
