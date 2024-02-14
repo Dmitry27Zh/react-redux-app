@@ -21,7 +21,7 @@ const slice = createSlice({
       state.entities[elementIndex] = { ...element, ...action.payload }
     },
     remove(state, action) {
-      return state.entities.filter((item) => item.id !== action.payload.id)
+      state.entities = state.entities.filter((item) => item.id !== action.payload.id)
     },
     taskRequested(state) {
       state.isLoading = true
