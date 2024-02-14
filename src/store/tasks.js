@@ -33,10 +33,10 @@ export const taskCompleted = (id) => {
   })
 }
 
-export const descriptionChanged = (id) => {
+export const titleChanged = (id) => {
   return update({
     id,
-    description: `New Title for id:${id}`,
+    title: `New Title for id:${id}`,
   })
 }
 

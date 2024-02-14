@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
 import createStore from './store/store'
-import { taskCompleted, taskRemoved, descriptionChanged, thunkDemo, getTasks } from './store/tasks'
+import { taskCompleted, taskRemoved, titleChanged, thunkDemo, getTasks } from './store/tasks'
 import { Provider, useSelector } from 'react-redux'
 
 const store = createStore()
@@ -15,8 +15,8 @@ const App = () => {
     store.dispatch(taskCompleted(id))
     store.dispatch(thunkDemo(id))
   }
-  const changeDescription = (id) => {
-    store.dispatch(descriptionChanged(id))
+  const changeTitle = (id) => {
+    store.dispatch(titleChanged(id))
   }
   const removeTask = (id) => {
     store.dispatch(taskRemoved(id))
@@ -28,10 +28,10 @@ const App = () => {
       <ul>
         {state.map((item) => (
           <li key={item.id}>
-            <p>{item.description}</p>
+            <p>{item.title}</p>
             <p>Completed: {String(item.completed)}</p>
             <button onClick={() => completeTask(item.id)}>Complete</button>
-            <button onClick={() => changeDescription(item.id)}>Change title</button>
+            <button onClick={() => changeTitle(item.id)}>Change title</button>
             <button onClick={() => removeTask(item.id)}>Remove</button>
             <hr />
           </li>
