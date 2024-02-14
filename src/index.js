@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import configureStore from './store/store'
-import { taskCompleted, taskRemoved, descriptionChanged, thunkDemo } from './store/tasks'
+import { taskCompleted, taskRemoved, descriptionChanged, thunkDemo, getTasks } from './store/tasks'
 
 const store = configureStore()
 
 const App = () => {
   const [state, setState] = useState(store.getState())
   useEffect(() => {
+    store.dispatch(getTasks())
     store.subscribe(() => {
       setState(store.getState())
     })
