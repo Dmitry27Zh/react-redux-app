@@ -42,4 +42,9 @@ export const taskRemoved = (id) => {
   })
 }
 
+export const thunkDemo = (id) => (dispatch, getState) => {
+  console.warn('Thunk Demo: ', getState())
+  dispatch(taskRemoved(id))
+}
+
 export default slice.reducer

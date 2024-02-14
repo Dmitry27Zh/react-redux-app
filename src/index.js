@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import configureStore from './store/store'
-import { taskCompleted, taskRemoved, descriptionChanged } from './store/tasks'
+import { taskCompleted, taskRemoved, descriptionChanged, thunkDemo } from './store/tasks'
 
 const store = configureStore()
 
@@ -14,6 +14,7 @@ const App = () => {
   }, [])
   const completeTask = (id) => {
     store.dispatch(taskCompleted(id))
+    store.dispatch(thunkDemo(id))
   }
   const changeDescription = (id) => {
     store.dispatch(descriptionChanged(id))
