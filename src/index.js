@@ -47,6 +47,7 @@ const App = () => {
   return (
     <>
       <h1>App</h1>
+      <button onClick={() => onTaskCreate()}>Create new Task</button>
       <ul>
         {state.map((item) => (
           <li key={item.id}>
@@ -55,7 +56,6 @@ const App = () => {
             <button onClick={() => completeTask(item.id)}>Complete</button>
             <button onClick={() => changeTitle(item.id)}>Change title</button>
             <button onClick={() => removeTask(item.id)}>Remove</button>
-            <button onClick={() => onTaskCreate()}>Create new Task</button>
             <hr />
           </li>
         ))}
