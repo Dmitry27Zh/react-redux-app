@@ -26,7 +26,7 @@ const slice = createSlice({
     taskRequested(state) {
       state.isLoading = true
     },
-    taskRequestFailed(state, action) {
+    taskRequestFailed(state) {
       state.isLoading = false
     },
   },
@@ -59,7 +59,7 @@ export const thunkDemo = (id) => (dispatch, getState) => {
   dispatch(taskRemoved(id))
 }
 
-export const getTasks = () => async (dispatch) => {
+export const loadTasks = () => async (dispatch) => {
   dispatch(taskRequested())
   try {
     const data = await todosService.fetch()
@@ -69,5 +69,8 @@ export const getTasks = () => async (dispatch) => {
     dispatch(setError(e.message))
   }
 }
+
+export const getTasks = () => (state) => state.tasks.entities
+export const getTasksLoadingStatus = () => (state) => state.tasks.isLoading
 
 export default slice.reducer
